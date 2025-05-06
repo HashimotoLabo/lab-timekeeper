@@ -10,12 +10,15 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 
+import { Log, type LogFirestoreType } from '@/features/database/types/LogsDB'
+
 import { getQueryDocsFromLogsDB } from '@/features/database/composables/LogsDBService'
 
-const logs = ref()
+const logs = ref<LogFirestoreType[]>()
 
 onMounted(async () => {
   logs.value = await getQueryDocsFromLogsDB(7)
+
   console.log('logs', logs.value)
 })
 </script>

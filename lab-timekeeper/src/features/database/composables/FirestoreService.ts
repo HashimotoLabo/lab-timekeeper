@@ -11,6 +11,25 @@ import {
 import { db } from '@/plugins/firebase'
 
 /**
+ * WhereClause 型
+ * Firestore の where 条件を表す型
+ */
+export type WhereClause = {
+  field: string
+  operator: WhereFilterOp
+  value: any
+}
+
+/**
+ * OrderByClause 型
+ * Firestore の orderBy 条件を表す型
+ */
+export type OrderByClause = {
+  field: string
+  direction: 'asc' | 'desc'
+}
+
+/**
  * FirestoreService クラス
  * Firestore の操作をカプセル化するクラス
  */
@@ -52,15 +71,8 @@ class FS {
    */
   static async getQueryDocuments(
     collectionName: string,
-    whereClauses: {
-      field: string
-      operator: WhereFilterOp
-      value: any
-    }[],
-    orderByClauses: {
-      field: string
-      direction: 'asc' | 'desc'
-    }[],
+    whereClauses: WhereClause[],
+    orderByClauses: OrderByClause[],
   ) {
     try {
       const collectionRef = collection(db, collectionName)

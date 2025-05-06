@@ -1,42 +1,34 @@
-import FS from './FirestoreService'
-import { type WhereFilterOp, Timestamp } from 'firebase/firestore'
-
+import type { LogFirestoreTypeWithId } from '../types/LogsDB'
+import FS, { type WhereClause, type OrderByClause } from './FirestoreService'
+import { Timestamp } from 'firebase/firestore'
+import { Log } from '../types/LogsDB'
 /**
  * Logsという文字列を返す関数
  * @returns "Logs" という文字列
  */
 const getLogsCollectionName = (): string => 'Logs'
 
-/**
- * Log
- * @param data - 追加するデータオブジェクト
- * @returns 新しいドキュメントのID
- */
-export const getQueryDocsFromLogsDB = async (days: number) => {
+export const getQueryDocsFromLogsDB = async (days: number): Promise<LogFirestoreTypeWithId[]> => {
   const currentDate = new Date()
   const pastDate = new Date()
   pastDate.setDate(currentDate.getDate() - days)
 
-  const whereClauses: {
-    field: string
-    operator: WhereFilterOp
-    value: any
-  }[] = [
+  const whereClauses: WhereClause[] = [
     {
       field: 'createdAt',
       operator: '>=',
       value: Timestamp.fromDate(pastDate),
     },
   ]
-  const orderByClauses: {
-    field: string
-    direction: 'asc' | 'desc'
-  }[] = [
+  const orderByClauses: OrderByClause[] = [
     {
       field: 'createdAt',
       direction: 'desc',
     },
   ]
-
-  return await FS.getQueryDocuments(getLogsCollectionName(), whereClauses, orderByClauses)
+  const rawDocs = await FS.getQueryDocuments(getLogsCollectionName(), whereClauses, orderByClauses)
+  const logs: LogFirestoreTypeWithId[] = rawDocs.map((doc) => {
+    return Log.fromFirestore(doc)
+  })
+  return logs
 }
