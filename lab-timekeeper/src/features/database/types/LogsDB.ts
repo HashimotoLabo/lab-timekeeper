@@ -45,6 +45,7 @@ export class Log {
   }
 
   // --- Firestoreからインスタンスを作成 ---
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static fromFirestore(data: any): Log {
     return new Log({
       ...data,

@@ -46,11 +46,10 @@ const password = ref('')
 
 const login = async () => {
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, email.value, password.value)
-    const user = userCredential.user
+    await signInWithEmailAndPassword(auth, email.value, password.value)
     router.push('/home')
   } catch (error) {
-    // console.error('Error logging in:', error)
+    console.error('Error logging in:', error)
   }
 }
 </script>
