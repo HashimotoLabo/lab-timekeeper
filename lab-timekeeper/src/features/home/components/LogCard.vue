@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title class="text-h5">Log</v-card-title>
+    <v-card-title class="text-h5">ログ</v-card-title>
     <v-card-text>
       <v-data-table :items="logs"></v-data-table>
     </v-card-text>
