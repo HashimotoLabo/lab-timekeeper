@@ -17,6 +17,7 @@ import { db } from '@/plugins/firebase'
 export type WhereClause = {
   field: string
   operator: WhereFilterOp
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value: any
 }
 
@@ -94,6 +95,26 @@ class FS {
       return docsData
     } catch (error) {
       console.error('Error querying documents: ', error)
+      throw error
+    }
+  }
+
+  /**
+   * 指定されたコレクション内のすべてのドキュメントを取得する関数
+   * @param collectionName - ドキュメントを取得するコレクション名
+   * @returns すべてのドキュメントのデータ
+   */
+  static async getAllDocuments(collectionName: string): Promise<object[]> {
+    try {
+      const collectionRef = collection(db, collectionName)
+      const querySnapshot = await getDocs(collectionRef)
+      const docsData = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }))
+      return docsData
+    } catch (error) {
+      console.error('Error fetching all documents: ', error)
       throw error
     }
   }
