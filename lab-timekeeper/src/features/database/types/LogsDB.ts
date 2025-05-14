@@ -22,9 +22,16 @@ export interface LogFirestoreTypeWithId extends LogFirestoreType {
   id: string
 }
 
-export class Log {
-  private _createdAt: Date
+interface LogDisplayType {
+  memo: string
+  state: number
+  uid: string
+  createdAt?: Date
+  id: string
+}
 
+export class Log {
+  createdAt: Date
   memo: string
   state: number
   uid: string
@@ -37,7 +44,7 @@ export class Log {
     uid = '',
     id = '',
   }: LogLocalTypeWithId) {
-    this._createdAt = createdAt
+    this.createdAt = createdAt
     this.memo = memo
     this.state = state
     this.uid = uid
@@ -56,7 +63,17 @@ export class Log {
   // --- Firestoreに保存する形式に変換 ---
   toFirestore(): LogFirestoreTypeWithId {
     return {
-      createdAt: Timestamp.fromDate(this._createdAt),
+      createdAt: Timestamp.fromDate(this.createdAt),
+      memo: this.memo,
+      state: this.state,
+      uid: this.uid,
+      id: this.id,
+    }
+  }
+
+  toDisplay(): LogDisplayType {
+    return {
+      createdAt: this.createdAt,
       memo: this.memo,
       state: this.state,
       uid: this.uid,
