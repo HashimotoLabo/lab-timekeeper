@@ -4,6 +4,7 @@
       <v-tab :value="1">ログ</v-tab>
       <v-tab :value="2">ヒートマップ</v-tab>
       <v-tab :value="3">週間グラフ</v-tab>
+      <v-tab :value="4">ステータス</v-tab>
     </v-tabs>
 
     <v-tabs-window v-model="tab">
@@ -14,6 +15,11 @@
       </v-tabs-window-item>
       <v-tabs-window-item :value="2"> ヒートマップ </v-tabs-window-item>
       <v-tabs-window-item :value="3"> グラフ </v-tabs-window-item>
+      <v-tabs-window-item :value="4">
+        <v-container>
+          <user-status />
+        </v-container>
+      </v-tabs-window-item>
     </v-tabs-window>
   </v-card>
 </template>
@@ -22,8 +28,9 @@
 import { ref } from 'vue'
 
 import LogCard from '../components/LogCard.vue'
+import UserStatus from '../components/UserStatus.vue'
 
-const tab = ref(null)
+const tab = ref(4)
 </script>
 
 <style scoped></style>
