@@ -15,6 +15,7 @@
       </v-tabs-window-item>
       <v-tabs-window-item :value="2"> ヒートマップ </v-tabs-window-item>
       <v-tabs-window-item :value="3"> グラフ </v-tabs-window-item>
+      <!-- ステータス -->
       <v-tabs-window-item :value="4">
         <v-container>
           <user-status />
