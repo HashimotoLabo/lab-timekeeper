@@ -13,7 +13,11 @@
           <log-card />
         </v-container>
       </v-tabs-window-item>
-      <v-tabs-window-item :value="2"> ヒートマップ </v-tabs-window-item>
+      <v-tabs-window-item :value="2">
+        <v-container>
+          <heat-map />
+        </v-container>
+      </v-tabs-window-item>
       <v-tabs-window-item :value="3"> グラフ </v-tabs-window-item>
       <!-- ステータス -->
       <v-tabs-window-item :value="4">
@@ -30,6 +34,7 @@ import { ref } from 'vue'
 
 import LogCard from '../components/LogCard.vue'
 import UserStatus from '../components/UserStatus.vue'
+import HeatMap from '../components/HeatMap.vue'
 
 const tab = ref(4)
 </script>

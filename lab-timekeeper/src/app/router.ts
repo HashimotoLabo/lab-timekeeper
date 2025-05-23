@@ -24,14 +24,14 @@ const router = createRouter({
 })
 
 // 認証状態に基づくルート遷移の制御
-router.beforeEach((to, from, next) => {
-  if (to.path !== '/' && !currentUser) {
-    // ログインしていない場合、ログイン画面にリダイレクト
-    next('/')
-  } else {
-    // ログインしている場合はそのまま遷移
-    next()
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   if (to.path !== '/' && !currentUser) {
+//     // ログインしていない場合、ログイン画面にリダイレクト
+//     next('/')
+//   } else {
+//     // ログインしている場合はそのまま遷移
+//     next()
+//   }
+// })
 
 export default router

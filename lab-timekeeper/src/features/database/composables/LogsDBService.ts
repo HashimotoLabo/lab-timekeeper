@@ -60,7 +60,7 @@ export const getLogsByMonth = async (
   const orderByClauses: OrderByClause[] = [
     {
       field: 'createdAt',
-      direction: 'desc',
+      direction: 'asc',
     },
   ]
   const rawDocs = await FS.getQueryDocuments(getLogsCollectionName(), whereClauses, orderByClauses)
