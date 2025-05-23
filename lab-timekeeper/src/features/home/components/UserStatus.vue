@@ -74,9 +74,7 @@ const users = ref()
 
 onMounted(async () => {
   logs.value = await getQueryDocsFromLogsDB(30)
-  console.log(logs.value)
   users.value = await getAllDocsFromUsersDB()
-  console.log(users.value)
 })
 
 const findUserState = (userId: string, isColor: boolean): string => {

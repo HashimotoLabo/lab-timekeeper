@@ -31,3 +31,38 @@ export const getQueryDocsFromLogsDB = async (days: number): Promise<LogLocalType
   })
   return logs
 }
+
+/**
+ * 指定した年・月のログだけ取得する
+ * @param year  例: 2024
+ * @param month 1〜12
+ */
+export const getLogsByMonth = async (
+  year: number,
+  month: number,
+): Promise<LogLocalTypeWithId[]> => {
+  // 月は0始まりなので注意（1月=0, 12月=11）
+  const startDate = new Date(year, month - 1, 1, 0, 0, 0, 0)
+  const endDate = new Date(year, month, 1, 0, 0, 0, 0) // 翌月1日の0時
+
+  const whereClauses: WhereClause[] = [
+    {
+      field: 'createdAt',
+      operator: '>=',
+      value: Timestamp.fromDate(startDate),
+    },
+    {
+      field: 'createdAt',
+      operator: '<',
+      value: Timestamp.fromDate(endDate),
+    },
+  ]
+  const orderByClauses: OrderByClause[] = [
+    {
+      field: 'createdAt',
+      direction: 'desc',
+    },
+  ]
+  const rawDocs = await FS.getQueryDocuments(getLogsCollectionName(), whereClauses, orderByClauses)
+  return rawDocs.map((doc) => Log.fromFirestore(doc))
+}
